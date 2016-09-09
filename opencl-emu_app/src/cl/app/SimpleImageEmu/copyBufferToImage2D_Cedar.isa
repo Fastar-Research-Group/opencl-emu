@@ -1,0 +1,298 @@
+ShaderType = IL_SHADER_COMPUTE
+TargetChip = c
+; ------------- SC_SRCSHADER Dump ------------------
+SC_SHADERSTATE: u32NumIntVSConst = 0
+SC_SHADERSTATE: u32NumIntPSConst = 0
+SC_SHADERSTATE: u32NumIntGSConst = 0
+SC_SHADERSTATE: u32NumBoolVSConst = 0
+SC_SHADERSTATE: u32NumBoolPSConst = 0
+SC_SHADERSTATE: u32NumBoolGSConst = 0
+SC_SHADERSTATE: u32NumFloatVSConst = 0
+SC_SHADERSTATE: u32NumFloatPSConst = 0
+SC_SHADERSTATE: u32NumFloatGSConst = 0
+fConstantsAvailable = 0
+iConstantsAvailable = 0
+bConstantsAvailable = 0
+u32SCOptions[0] = 0x01A00000 SCOption_IGNORE_SAMPLE_L_BUG SCOption_FLOAT_DO_NOT_DIST SCOption_FLOAT_DO_NOT_REASSOC
+u32SCOptions[1] = 0x00202000 SCOption_R600_ERROR_ON_DOUBLE_MEMEXP SCOption_SET_VPM_FOR_SCATTER
+u32SCOptions[2] = 0x00000044 SCOption_R8XX_CF_ALU_STACK_ENTRY_WORKAROUND SCOption_R800_UAV_NONUAV_SYNC_WORKAROUND_BUG216513_1
+
+; --------  Disassembly --------------------
+00 ALU_PUSH_BEFORE: ADDR(96) CNT(12) KCACHE0(CB1:0-15) KCACHE1(CB0:0-15) 
+      0  x: MOV         R3.x,  KC0[6].x      
+         y: MOV         R3.y,  KC0[6].y      
+         z: MOV         R3.z,  KC0[6].z      
+         w: MOV         R3.w,  KC0[6].w      
+      1  t: MULLO_INT   ____,  R1.x,  KC1[1].x      
+      2  x: ADD_INT     ____,  R0.x,  PS1      
+         t: MULLO_INT   ____,  R1.y,  KC1[1].y      
+      3  x: ADD_INT     R0.x,  PV2.x,  KC1[6].x      
+         w: ADD_INT     ____,  R0.y,  PS2      
+      4  y: ADD_INT     R0.y,  PV3.w,  KC1[6].y      
+         z: SETGE_INT   R0.z,  PV3.x,  KC0[5].x      
+      5  x: PREDE_INT   ____,  R0.z,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+01 JUMP  POP_CNT(1) ADDR(71) 
+02 ALU_PUSH_BEFORE: ADDR(108) CNT(2) KCACHE0(CB1:0-15) 
+      6  z: SETGE_INT   R0.z,  R0.y,  KC0[5].y      
+      7  x: PREDE_INT   ____,  R0.z,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+03 JUMP  POP_CNT(2) ADDR(71) 
+04 ALU_PUSH_BEFORE: ADDR(110) CNT(7) KCACHE0(CB1:0-15) 
+      8  x: ADD_INT     R4.x,  R0.x,  KC0[4].x      
+         t: MULLO_INT   ____,  R0.y,  KC0[5].x      
+      9  x: ADD_INT     ____,  R0.x,  PS8      
+         y: ADD_INT     R4.y,  R0.y,  KC0[4].y      
+     10  t: MULLO_INT   ____,  PV9.x,  KC0[6].z      
+     11  z: ADD_INT     R0.z,  KC0[3].x,  PS10      
+     12  x: PREDE_INT   ____,  KC0[6].x,  1      UPDATE_EXEC_MASK UPDATE_PRED 
+05 JUMP  ADDR(24) 
+06 ALU_PUSH_BEFORE: ADDR(117) CNT(5) KCACHE0(CB1:0-15) 
+     13  y: MOV         R3.y,  0.0f      
+         z: MOV         R3.z,  0.0f      
+         w: MOV         R3.w,  0.0f      
+     14  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+07 JUMP  ADDR(11) 
+08 ALU: ADDR(122) CNT(5) KCACHE0(CB1:0-15) 
+     15  w: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     16  z: ADD_INT     ____,  KC0[0].x,  PV15.w      
+     17  x: LSHR        R0.x,  PV16.z,  (0x00000002, 2.802596929e-45f).x      
+09 TEX: ADDR(288) CNT(1) 
+     18  VFETCH R0._x__, R0.x, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+10 ALU: ADDR(127) CNT(4) 
+     19  x: MOV         R3.x,  R0.y      
+         y: MOV         R3.y,  R0.y      
+         z: MOV         R3.z,  R0.y      
+         w: MOV         R3.w,  R0.y      
+11 ELSE POP_CNT(1) ADDR(24) 
+12 ALU_PUSH_BEFORE: ADDR(131) CNT(2) KCACHE0(CB1:0-15) 
+     20  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+13 JUMP  ADDR(17) 
+14 ALU: ADDR(133) CNT(8) KCACHE0(CB1:0-15) 
+     21  x: LSHL        ____,  R0.z,  1      
+     22  w: ADD_INT     ____,  KC0[0].x,  PV21.x      
+     23  x: AND_INT     ____,  (0xFFFFFFFC, -1.#QNANf).x,  PV22.w      
+         z: AND_INT     ____,  PV22.w,  (0x00000003, 4.203895393e-45f).y      
+     24  y: ASHR        R0.y,  PV23.z,  1      
+         z: LSHR        R0.z,  PV23.x,  (0x00000002, 2.802596929e-45f).x      
+15 TEX: ADDR(290) CNT(1) 
+     25  VFETCH R0.___x, R0.z, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+16 ALU: ADDR(141) CNT(9) 
+     26  w: CNDE_INT    R123.w,  R0.y,  0.0f,  (0x00000010, 2.242077543e-44f).x      
+     27  y: ASHR        ____,  R0.w,  PV26.w      
+     28  x: AND_INT     ____,  PV27.y,  (0x0000FFFF, 9.183409486e-41f).x      
+     29  x: MOV         R3.x,  PV28.x      
+         y: MOV         R3.y,  PV28.x      
+         z: MOV         R3.z,  PV28.x      
+         w: MOV         R3.w,  PV28.x      
+17 ELSE POP_CNT(1) ADDR(23) 
+18 ALU_PUSH_BEFORE: ADDR(150) CNT(2) KCACHE0(CB1:0-15) 
+     30  x: SETNE_INT   R3.x,  KC0[6].y,  1      
+     31  x: PREDE_INT   ____,  R3.x,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+19 JUMP  POP_CNT(3) ADDR(24) 
+20 ALU: ADDR(152) CNT(9) KCACHE0(CB1:0-15) 
+     32  w: ADD_INT     ____,  KC0[0].x,  R0.z      
+     33  y: AND_INT     ____,  (0xFFFFFFFC, -1.#QNANf).x,  PV32.w      
+         z: AND_INT     ____,  PV32.w,  (0x00000003, 4.203895393e-45f).y      
+     34  x: MOV         R0.x,  PV33.z      
+         y: ADD_INT     R0.y,  (0xFFFFFFFE, -1.#QNANf).x,  PV33.z      
+         z: LSHR        R0.z,  PV33.y,  (0x00000002, 2.802596929e-45f).y      
+         w: ADD_INT     R0.w,  -1,  PV33.z      
+21 TEX: ADDR(292) CNT(1) 
+     35  VFETCH R1.___x, R0.z, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+22 ALU_POP2_AFTER: ADDR(161) CNT(13) 
+     36  y: CNDE_INT    R123.y,  R0.x,  0.0f,  (0x00000018, 3.363116314e-44f).x      
+     37  x: CNDE_INT    R123.x,  R0.w,  (0x00000008, 1.121038771e-44f).x,  PV36.y      
+     38  w: CNDE_INT    R123.w,  R0.y,  (0x00000010, 2.242077543e-44f).x,  PV37.x      
+     39  y: ASHR        ____,  R1.w,  PV38.w      
+     40  x: AND_INT     ____,  PV39.y,  (0x000000FF, 3.573311084e-43f).x      
+     41  x: MOV         R3.x,  PV40.x      
+         y: MOV         R3.y,  PV40.x      
+         z: MOV         R3.z,  PV40.x      
+         w: MOV         R3.w,  PV40.x      
+23 POP (1) ADDR(24) 
+24 ELSE POP_CNT(1) ADDR(69) 
+25 ALU_PUSH_BEFORE: ADDR(174) CNT(2) KCACHE0(CB1:0-15) 
+     42  x: PREDE_INT   ____,  KC0[6].x,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+26 JUMP  ADDR(45) 
+27 ALU_PUSH_BEFORE: ADDR(176) CNT(5) KCACHE0(CB1:0-15) 
+     43  y: MOV         R3.y,  0.0f      
+         z: MOV         R3.z,  0.0f      
+         w: MOV         R3.w,  0.0f      
+     44  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+28 JUMP  ADDR(32) 
+29 ALU: ADDR(181) CNT(8) KCACHE0(CB1:0-15) 
+     45  x: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     46  z: ADD_INT     ____,  KC0[0].x,  PV45.x      
+     47  x: LSHR        R0.x,  PV46.z,  (0x00000002, 2.802596929e-45f).x      
+         y: ADD_INT     ____,  PV46.z,  (0x00000004, 5.605193857e-45f).y      
+     48  w: LSHR        R0.w,  PV47.y,  (0x00000002, 2.802596929e-45f).x      
+30 TEX: ADDR(294) CNT(2) 
+     49  VFETCH R0.__x_, R0.w, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+     50  VFETCH R0._x__, R0.x, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+31 ALU: ADDR(189) CNT(4) 
+     51  x: MOV         R3.x,  R0.y      
+         y: MOV         R3.y,  R0.z      
+         z: MOV         R3.z,  R0.y      
+         w: MOV         R3.w,  R0.y      
+32 ELSE POP_CNT(1) ADDR(45) 
+33 ALU_PUSH_BEFORE: ADDR(193) CNT(2) KCACHE0(CB1:0-15) 
+     52  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+34 JUMP  ADDR(38) 
+35 ALU: ADDR(195) CNT(5) KCACHE0(CB1:0-15) 
+     53  y: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     54  w: ADD_INT     ____,  KC0[0].x,  PV53.y      
+     55  z: LSHR        R0.z,  PV54.w,  (0x00000002, 2.802596929e-45f).x      
+36 TEX: ADDR(298) CNT(1) 
+     56  VFETCH R0._x__, R0.z, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+37 ALU: ADDR(200) CNT(7) 
+     57  x: AND_INT     ____,  R0.y,  (0x0000FFFF, 9.183409486e-41f).x      
+     58  x: MOV         R3.x,  PV57.x      
+         y: LSHR        R3.y,  R0.y,  (0x00000010, 2.242077543e-44f).x      
+         z: MOV         R3.z,  PV57.x      
+         w: MOV         R3.w,  PV57.x      
+38 ELSE POP_CNT(1) ADDR(44) 
+39 ALU_PUSH_BEFORE: ADDR(207) CNT(2) KCACHE0(CB1:0-15) 
+     59  x: SETNE_INT   R3.x,  KC0[6].y,  1      
+     60  x: PREDE_INT   ____,  R3.x,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+40 JUMP  POP_CNT(3) ADDR(45) 
+41 ALU: ADDR(209) CNT(8) KCACHE0(CB1:0-15) 
+     61  z: LSHL        ____,  R0.z,  1      
+     62  x: ADD_INT     ____,  KC0[0].x,  PV61.z      
+     63  y: AND_INT     ____,  PV62.x,  (0x00000003, 4.203895393e-45f).x      
+         z: AND_INT     ____,  (0xFFFFFFFC, -1.#QNANf).y,  PV62.x      
+     64  x: ASHR        R0.x,  PV63.y,  1      
+         w: LSHR        R0.w,  PV63.z,  (0x00000002, 2.802596929e-45f).x      
+42 TEX: ADDR(300) CNT(1) 
+     65  VFETCH R0._x__, R0.w, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+43 ALU_POP2_AFTER: ADDR(217) CNT(11) 
+     66  x: CNDE_INT    R123.x,  R0.x,  0.0f,  (0x00000010, 2.242077543e-44f).x      
+     67  z: ASHR        ____,  R0.y,  PV66.x      
+     68  x: AND_INT     ____,  PV67.z,  (0x000000FF, 3.573311084e-43f).x      
+         y: AND_INT     ____,  PV67.z,  (0x0000FFFF, 9.183409486e-41f).y      
+     69  x: MOV         R3.x,  PV68.x      
+         y: LSHR        R3.y,  PV68.y,  (0x00000008, 1.121038771e-44f).x      
+         z: MOV         R3.z,  PV68.x      
+         w: MOV         R3.w,  PV68.x      
+44 POP (1) ADDR(45) 
+45 ELSE POP_CNT(1) ADDR(68) 
+46 ALU_PUSH_BEFORE: ADDR(228) CNT(2) KCACHE0(CB1:0-15) 
+     70  x: PREDE_INT   ____,  KC0[6].x,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+47 JUMP  POP_CNT(3) ADDR(69) 
+48 ALU_PUSH_BEFORE: ADDR(230) CNT(5) KCACHE0(CB1:0-15) 
+     71  y: MOV         R3.y,  0.0f      
+         z: MOV         R3.z,  0.0f      
+         w: MOV         R3.w,  0.0f      
+     72  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+49 JUMP  ADDR(53) 
+50 ALU: ADDR(235) CNT(13) KCACHE0(CB1:0-15) 
+     73  z: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     74  x: ADD_INT     ____,  KC0[0].x,  PV73.z      
+     75  x: ADD_INT     ____,  PV74.x,  (0x00000008, 1.121038771e-44f).x      
+         y: LSHR        R0.y,  PV74.x,  (0x00000002, 2.802596929e-45f).y      
+         z: ADD_INT     ____,  PV74.x,  (0x00000004, 5.605193857e-45f).z      
+         w: ADD_INT     ____,  PV74.x,  (0x0000000C, 1.681558157e-44f).w      
+     76  x: LSHR        R0.x,  PV75.z,  (0x00000002, 2.802596929e-45f).x      
+         z: LSHR        R0.z,  PV75.w,  (0x00000002, 2.802596929e-45f).x      
+         w: LSHR        R0.w,  PV75.x,  (0x00000002, 2.802596929e-45f).x      
+51 TEX: ADDR(302) CNT(4) 
+     77  VFETCH R1._x__, R0.z, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+     78  VFETCH R2._x__, R0.w, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+     79  VFETCH R3._x__, R0.x, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+     80  VFETCH R3.x___, R0.y, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+52 ALU: ADDR(248) CNT(3) 
+     81  y: MOV         R3.y,  R3.y      
+         z: MOV         R3.z,  R2.y      VEC_120 
+         w: MOV         R3.w,  R1.y      VEC_201 
+53 ELSE ADDR(67) 
+54 ALU_PUSH_BEFORE: ADDR(251) CNT(2) KCACHE0(CB1:0-15) 
+     82  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+55 JUMP  ADDR(59) 
+56 ALU: ADDR(253) CNT(8) KCACHE0(CB1:0-15) 
+     83  x: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     84  w: ADD_INT     ____,  KC0[0].x,  PV83.x      
+     85  x: LSHR        R0.x,  PV84.w,  (0x00000002, 2.802596929e-45f).x      
+         y: ADD_INT     ____,  PV84.w,  (0x00000004, 5.605193857e-45f).y      
+     86  z: LSHR        R0.z,  PV85.y,  (0x00000002, 2.802596929e-45f).x      
+57 TEX: ADDR(310) CNT(2) 
+     87  VFETCH R0._x__, R0.z, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+     88  VFETCH R0.___x, R0.x, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+58 ALU: ADDR(261) CNT(5) 
+     89  x: AND_INT     R3.x,  R0.w,  (0x0000FFFF, 9.183409486e-41f).x      
+         y: LSHR        R3.y,  R0.w,  (0x00000010, 2.242077543e-44f).y      
+         z: AND_INT     R3.z,  R0.y,  (0x0000FFFF, 9.183409486e-41f).x      
+         w: LSHR        R3.w,  R0.y,  (0x00000010, 2.242077543e-44f).y      
+59 ELSE POP_CNT(1) ADDR(67) 
+60 ALU: ADDR(266) CNT(1) KCACHE0(CB1:0-15) 
+     90  x: SETNE_INT   R3.x,  KC0[6].y,  1      
+61 PUSH ADDR(69) POP_CNT(5) 
+62 ALU: ADDR(267) CNT(1) 
+     91  x: PREDE_INT   ____,  R3.x,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+63 JUMP  POP_CNT(6) ADDR(69) 
+64 ALU: ADDR(268) CNT(5) KCACHE0(CB1:0-15) 
+     92  z: LSHL        ____,  R0.z,  (0x00000002, 2.802596929e-45f).x      
+     93  y: ADD_INT     ____,  KC0[0].x,  PV92.z      
+     94  x: LSHR        R0.x,  PV93.y,  (0x00000002, 2.802596929e-45f).x      
+65 TEX: ADDR(314) CNT(1) 
+     95  VFETCH R0.___x, R0.x, fc156  MEGA(4) 
+         FETCH_TYPE(NO_INDEX_OFFSET) 
+66 ALU_POP2_AFTER: ADDR(273) CNT(6) 
+     96  x: AND_INT     R3.x,  R0.w,  (0x000000FF, 3.573311084e-43f).x      
+         y: BFE_UINT    R3.y,  R0.w,  (0x00000008, 1.121038771e-44f).y,  (0x00000008, 1.121038771e-44f).y      
+         z: BFE_UINT    R3.z,  R0.w,  (0x00000010, 2.242077543e-44f).z,  (0x00000008, 1.121038771e-44f).y      
+         w: LSHR        R3.w,  R0.w,  (0x00000018, 3.363116314e-44f).w      
+67 POP (3) ADDR(68) 
+68 POP (1) ADDR(69) 
+69 MEM_RAT_STORE_TYPED: RAT(0)[R4], R3,  MARK  VPM 
+70 POP (2) ADDR(71) 
+71 NOP NO_BARRIER 
+END_OF_PROGRAM
+
+; ----------------- CS Data ------------------------
+; Input Semantic Mappings
+;    No input mappings
+
+GprPoolSize = 0
+CodeLen                 = 2528;Bytes
+PGM_END_CF              = 0; words(64 bit)
+PGM_END_ALU             = 0; words(64 bit)
+PGM_END_FETCH           = 0; words(64 bit)
+MaxScratchRegsNeeded    = 0
+;AluPacking              = 0.0
+;AluClauses              = 0
+;PowerThrottleRate       = 0.0
+; texResourceUsage[0]     = 0x00000000
+; texResourceUsage[1]     = 0x00000000
+; texResourceUsage[2]     = 0x00000000
+; texResourceUsage[3]     = 0x00000000
+; fetch4ResourceUsage[0]  = 0x00000000
+; fetch4ResourceUsage[1]  = 0x00000000
+; fetch4ResourceUsage[2]  = 0x00000000
+; fetch4ResourceUsage[3]  = 0x00000000
+; texSamplerUsage         = 0x00000000
+; constBufUsage           = 0x00000000
+ResourcesAffectAlphaOutput[0]  = 0x00000000
+ResourcesAffectAlphaOutput[1]  = 0x00000000
+ResourcesAffectAlphaOutput[2]  = 0x00000000
+ResourcesAffectAlphaOutput[3]  = 0x00000000
+
+;SQ_PGM_RESOURCES        = 0x30000205
+SQ_PGM_RESOURCES:NUM_GPRS     = 5
+SQ_PGM_RESOURCES:STACK_SIZE           = 2
+SQ_PGM_RESOURCES:PRIME_CACHE_ENABLE   = 1
+;SQ_PGM_RESOURCES_2      = 0x000000C0
+SQ_LDS_ALLOC:SIZE        = 0x00000000
+; RatOpIsUsed = 0x3
+; NumThreadPerGroupFlattened = 128
+; SetBufferForNumGroup = true

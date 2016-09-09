@@ -1,0 +1,86 @@
+ShaderType = IL_SHADER_COMPUTE
+TargetChip = c
+; ------------- SC_SRCSHADER Dump ------------------
+SC_SHADERSTATE: u32NumIntVSConst = 0
+SC_SHADERSTATE: u32NumIntPSConst = 0
+SC_SHADERSTATE: u32NumIntGSConst = 0
+SC_SHADERSTATE: u32NumBoolVSConst = 0
+SC_SHADERSTATE: u32NumBoolPSConst = 0
+SC_SHADERSTATE: u32NumBoolGSConst = 0
+SC_SHADERSTATE: u32NumFloatVSConst = 0
+SC_SHADERSTATE: u32NumFloatPSConst = 0
+SC_SHADERSTATE: u32NumFloatGSConst = 0
+fConstantsAvailable = 0
+iConstantsAvailable = 0
+bConstantsAvailable = 0
+u32SCOptions[0] = 0x01A00000 SCOption_IGNORE_SAMPLE_L_BUG SCOption_FLOAT_DO_NOT_DIST SCOption_FLOAT_DO_NOT_REASSOC
+u32SCOptions[1] = 0x00202000 SCOption_R600_ERROR_ON_DOUBLE_MEMEXP SCOption_SET_VPM_FOR_SCATTER
+u32SCOptions[2] = 0x00000044 SCOption_R8XX_CF_ALU_STACK_ENTRY_WORKAROUND SCOption_R800_UAV_NONUAV_SYNC_WORKAROUND_BUG216513_1
+
+; --------  Disassembly --------------------
+00 ALU: ADDR(32) CNT(17) KCACHE0(CB0:0-15) 
+      0  x: LSHR        T0.x,  KC0[0].y,  1      
+         z: MOV         R2.z,  0.0f      
+         w: MOV         R3.w,  1.0f      
+         t: MULLO_INT   ____,  R1.y,  KC0[1].y      
+      1  z: ADD_INT     ____,  R0.y,  PS0      
+         t: MULLO_INT   ____,  R1.x,  KC0[1].x      
+      2  y: ADD_INT     R0.y,  PV1.z,  KC0[6].y      
+         w: ADD_INT     ____,  R0.x,  PS1      
+      3  x: ADD_INT     R0.x,  PV2.w,  KC0[6].x      
+         w: SUB_INT     T0.w,  PV2.y,  T0.x      
+         t: I_TO_F      ____,  PV2.y      
+      4  y: FLOOR       R2.y,  PS3      
+         t: I_TO_F      ____,  PV3.x      
+      5  x: FLOOR       R2.x,  PS4      
+         z: FLOOR       R3.z,  PS4      
+         t: I_TO_F      ____,  T0.w      
+      6  y: FLOOR       R3.y,  PS5      
+01 TEX: ADDR(64) CNT(2) 
+      7  SAMPLE R2, R2.xyzx, t0, s0  UNNORM(XYZW) 
+      8  SAMPLE R3, R3.zywz, t0, s0  UNNORM(XYZW) 
+02 ALU: ADDR(49) CNT(4) 
+      9  x: ADD_INT     R2.x,  R2.x,  R3.x      
+         y: ADD_INT     R2.y,  R2.y,  R3.y      
+         z: ADD_INT     R2.z,  R2.z,  R3.z      
+         w: ADD_INT     R2.w,  R2.w,  R3.w      
+03 MEM_RAT_STORE_TYPED: RAT(0)[R0], R2,  VPM 
+END_OF_PROGRAM
+
+; ----------------- CS Data ------------------------
+; Input Semantic Mappings
+;    No input mappings
+
+GprPoolSize = 0
+CodeLen                 = 544;Bytes
+PGM_END_CF              = 0; words(64 bit)
+PGM_END_ALU             = 0; words(64 bit)
+PGM_END_FETCH           = 0; words(64 bit)
+MaxScratchRegsNeeded    = 0
+;AluPacking              = 0.0
+;AluClauses              = 0
+;PowerThrottleRate       = 0.0
+; texResourceUsage[0]     = 0x00000000
+; texResourceUsage[1]     = 0x00000000
+; texResourceUsage[2]     = 0x00000000
+; texResourceUsage[3]     = 0x00000000
+; fetch4ResourceUsage[0]  = 0x00000000
+; fetch4ResourceUsage[1]  = 0x00000000
+; fetch4ResourceUsage[2]  = 0x00000000
+; fetch4ResourceUsage[3]  = 0x00000000
+; texSamplerUsage         = 0x00000000
+; constBufUsage           = 0x00000000
+ResourcesAffectAlphaOutput[0]  = 0x00000000
+ResourcesAffectAlphaOutput[1]  = 0x00000000
+ResourcesAffectAlphaOutput[2]  = 0x00000000
+ResourcesAffectAlphaOutput[3]  = 0x00000000
+
+;SQ_PGM_RESOURCES        = 0x30000004
+SQ_PGM_RESOURCES:NUM_GPRS     = 4
+SQ_PGM_RESOURCES:STACK_SIZE           = 0
+SQ_PGM_RESOURCES:PRIME_CACHE_ENABLE   = 1
+;SQ_PGM_RESOURCES_2      = 0x000000C0
+SQ_LDS_ALLOC:SIZE        = 0x00000000
+; RatOpIsUsed = 0x1
+; NumThreadPerGroupFlattened = 128
+; SetBufferForNumGroup = true

@@ -1,0 +1,218 @@
+ShaderType = IL_SHADER_COMPUTE
+TargetChip = c
+; ------------- SC_SRCSHADER Dump ------------------
+SC_SHADERSTATE: u32NumIntVSConst = 0
+SC_SHADERSTATE: u32NumIntPSConst = 0
+SC_SHADERSTATE: u32NumIntGSConst = 0
+SC_SHADERSTATE: u32NumBoolVSConst = 0
+SC_SHADERSTATE: u32NumBoolPSConst = 0
+SC_SHADERSTATE: u32NumBoolGSConst = 0
+SC_SHADERSTATE: u32NumFloatVSConst = 0
+SC_SHADERSTATE: u32NumFloatPSConst = 0
+SC_SHADERSTATE: u32NumFloatGSConst = 0
+fConstantsAvailable = 0
+iConstantsAvailable = 0
+bConstantsAvailable = 0
+u32SCOptions[0] = 0x01A00000 SCOption_IGNORE_SAMPLE_L_BUG SCOption_FLOAT_DO_NOT_DIST SCOption_FLOAT_DO_NOT_REASSOC
+u32SCOptions[1] = 0x00202000 SCOption_R600_ERROR_ON_DOUBLE_MEMEXP SCOption_SET_VPM_FOR_SCATTER
+u32SCOptions[2] = 0x00000044 SCOption_R8XX_CF_ALU_STACK_ENTRY_WORKAROUND SCOption_R800_UAV_NONUAV_SYNC_WORKAROUND_BUG216513_1
+
+; --------  Disassembly --------------------
+00 ALU_PUSH_BEFORE: ADDR(96) CNT(17) KCACHE0(CB0:0-15) KCACHE1(CB1:0-15) 
+      0  t: MULLO_INT   ____,  R1.x,  KC0[1].x      
+      1  w: ADD_INT     ____,  R0.x,  PS0      
+         t: MULLO_INT   ____,  R1.y,  KC0[1].y      
+      2  x: ADD_INT     R0.x,  PV1.w,  KC0[6].x      
+         z: ADD_INT     ____,  R0.y,  PS1      
+         t: MULLO_INT   ____,  R1.z,  KC0[1].z      
+      3  x: SETGT_INT   T0.x,  KC1[5].x,  PV2.x      
+         y: ADD_INT     R0.y,  PV2.z,  KC0[6].y      
+         z: ADD_INT     ____,  R0.z,  PS2      
+      4  z: ADD_INT     R0.z,  PV3.z,  KC0[6].z      
+         w: SETGT_INT   ____,  KC1[5].y,  PV3.y      
+      5  z: AND_INT     ____,  T0.x,  PV4.w      
+      6  y: AND_INT     ____,  PV5.z,  1      
+      7  x: BFE_INT     R123.x,  PV6.y,  0.0f,  (0x00000008, 1.121038771e-44f).x      
+      8  w: SETE_INT    R0.w,  PV7.x,  0.0f      
+      9  x: PREDE_INT   ____,  R0.w,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+01 JUMP  POP_CNT(1) ADDR(65) 
+02 ALU_PUSH_BEFORE: ADDR(113) CNT(2) KCACHE0(CB1:0-15) 
+     10  w: SETGE_INT   R0.w,  R0.z,  KC0[5].z      
+     11  x: PREDE_INT   ____,  R0.w,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+03 JUMP  POP_CNT(2) ADDR(65) 
+04 ALU: ADDR(115) CNT(13) KCACHE0(CB1:0-15) 
+     12  t: MULLO_INT   T1.w,  KC0[5].y,  KC0[5].x      
+     13  x: ADD_INT     ____,  R0.x,  KC0[3].x      
+         t: MULLO_INT   ____,  R0.y,  KC0[5].x      
+     14  x: ADD_INT     R1.x,  R0.x,  PS13      
+         y: ADD_INT     ____,  R0.y,  KC0[3].y      
+         w: ADD_INT     T0.w,  R0.z,  KC0[3].z      
+         t: I_TO_F      ____,  PV13.x      
+     15  x: FLOOR       R0.x,  PS14      
+         t: I_TO_F      ____,  PV14.y      
+     16  y: FLOOR       R0.y,  PS15      
+         t: I_TO_F      ____,  T0.w      
+     17  z: FLOOR       R0.z,  PS16      
+         t: MULLO_INT   R1.z,  T1.w,  R0.z      
+05 TEX: ADDR(224) CNT(1) 
+     18  SAMPLE R2, R0.xyzx, t0, s0  UNNORM(XYZW) 
+06 ALU_PUSH_BEFORE: ADDR(128) CNT(4) KCACHE0(CB1:0-15) 
+     19  z: ADD_INT     ____,  R1.z,  R1.x      
+     20  t: MULLO_INT   ____,  PV19.z,  KC0[6].z      
+     21  w: ADD_INT     R0.w,  KC0[4].x,  PS20      
+     22  x: PREDE_INT   ____,  KC0[6].x,  1      UPDATE_EXEC_MASK UPDATE_PRED 
+07 JUMP  ADDR(24) 
+08 ALU_PUSH_BEFORE: ADDR(132) CNT(2) KCACHE0(CB1:0-15) 
+     23  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+09 JUMP  ADDR(12) 
+10 ALU: ADDR(134) CNT(5) KCACHE0(CB1:0-15) 
+     24  z: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).x      
+     25  y: ADD_INT     ____,  KC0[2].x,  PV24.z      
+     26  x: LSHR        R0.x,  PV25.y,  (0x00000002, 2.802596929e-45f).x      
+11 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R0].x___, R2, ARRAY_SIZE(4)  VPM 
+12 ELSE POP_CNT(1) ADDR(24) 
+13 ALU_PUSH_BEFORE: ADDR(139) CNT(2) KCACHE0(CB1:0-15) 
+     27  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+14 JUMP  ADDR(17) 
+15 ALU: ADDR(141) CNT(6) KCACHE0(CB1:0-15) 
+     28  x: AND_INT     R0.x,  R2.x,  (0x000000FF, 3.573311084e-43f).x      
+         z: LSHL        ____,  R0.w,  1      
+     29  y: ADD_INT     ____,  KC0[2].x,  PV28.z      
+     30  x: LSHR        R1.x,  PV29.y,  (0x00000002, 2.802596929e-45f).x      
+16 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].x___, R0, ARRAY_SIZE(4)  VPM 
+17 ELSE POP_CNT(1) ADDR(23) 
+18 ALU_PUSH_BEFORE: ADDR(147) CNT(2) KCACHE0(CB1:0-15) 
+     31  y: SETNE_INT   R0.y,  KC0[6].y,  1      
+     32  x: PREDE_INT   ____,  R0.y,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+19 JUMP  POP_CNT(3) ADDR(24) 
+20 ALU: ADDR(149) CNT(5) KCACHE0(CB1:0-15) 
+     33  x: AND_INT     R0.x,  R2.x,  (0x000000FF, 3.573311084e-43f).x      
+         y: ADD_INT     ____,  KC0[2].x,  R0.w      
+     34  x: LSHR        R1.x,  PV33.y,  (0x00000002, 2.802596929e-45f).x      
+21 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].x___, R0, ARRAY_SIZE(4)  VPM 
+22 POP (2) ADDR(23) 
+23 POP (1) ADDR(24) 
+24 ELSE ADDR(64) 
+25 ALU_PUSH_BEFORE: ADDR(154) CNT(2) KCACHE0(CB1:0-15) 
+     35  x: PREDE_INT   ____,  KC0[6].x,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+26 JUMP  ADDR(43) 
+27 ALU_PUSH_BEFORE: ADDR(156) CNT(2) KCACHE0(CB1:0-15) 
+     36  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+28 JUMP  ADDR(31) 
+29 ALU: ADDR(158) CNT(5) KCACHE0(CB1:0-15) 
+     37  z: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).x      
+     38  y: ADD_INT     ____,  KC0[2].x,  PV37.z      
+     39  x: LSHR        R0.x,  PV38.y,  (0x00000002, 2.802596929e-45f).x      
+30 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R0].xy__, R2, ARRAY_SIZE(4)  VPM 
+31 ELSE POP_CNT(1) ADDR(43) 
+32 ALU_PUSH_BEFORE: ADDR(163) CNT(2) KCACHE0(CB1:0-15) 
+     40  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+33 JUMP  ADDR(36) 
+34 ALU: ADDR(165) CNT(7) KCACHE0(CB1:0-15) 
+     41  y: LSHL        ____,  R2.y,  (0x00000010, 2.242077543e-44f).x      
+         w: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).y      
+     42  x: OR_INT      R0.x,  R2.x,  PV41.y      
+         z: ADD_INT     ____,  KC0[2].x,  PV41.w      
+     43  x: LSHR        R1.x,  PV42.z,  (0x00000002, 2.802596929e-45f).x      
+35 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].x___, R0, ARRAY_SIZE(4)  VPM 
+36 ELSE POP_CNT(1) ADDR(42) 
+37 ALU_PUSH_BEFORE: ADDR(172) CNT(2) KCACHE0(CB1:0-15) 
+     44  y: SETNE_INT   R0.y,  KC0[6].y,  1      
+     45  x: PREDE_INT   ____,  R0.y,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+38 JUMP  POP_CNT(3) ADDR(43) 
+39 ALU: ADDR(174) CNT(8) KCACHE0(CB1:0-15) 
+     46  x: LSHL        ____,  R0.w,  1      
+         z: LSHL        ____,  R2.y,  (0x00000008, 1.121038771e-44f).x      
+     47  y: OR_INT      ____,  R2.x,  PV46.z      
+         w: ADD_INT     ____,  KC0[2].x,  PV46.x      
+     48  x: LSHR        R1.x,  PV47.w,  (0x00000002, 2.802596929e-45f).x      
+         t: AND_INT     R0.x,  PV47.y,  (0x0000FFFF, 9.183409486e-41f).y      
+40 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].x___, R0, ARRAY_SIZE(4)  VPM 
+41 POP (2) ADDR(42) 
+42 POP (1) ADDR(43) 
+43 ELSE POP_CNT(1) ADDR(64) 
+44 ALU_PUSH_BEFORE: ADDR(182) CNT(2) KCACHE0(CB1:0-15) 
+     49  x: PREDE_INT   ____,  KC0[6].x,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+45 JUMP  POP_CNT(5) ADDR(65) 
+46 ALU_PUSH_BEFORE: ADDR(184) CNT(2) KCACHE0(CB1:0-15) 
+     50  x: PREDE_INT   ____,  KC0[6].y,  (0x00000004, 5.605193857e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+47 JUMP  ADDR(50) 
+48 ALU: ADDR(186) CNT(5) KCACHE0(CB1:0-15) 
+     51  z: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).x      
+     52  y: ADD_INT     ____,  KC0[2].x,  PV51.z      
+     53  x: LSHR        R0.x,  PV52.y,  (0x00000002, 2.802596929e-45f).x      
+49 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R0], R2, ARRAY_SIZE(4)  VPM 
+50 ELSE ADDR(63) 
+51 ALU_PUSH_BEFORE: ADDR(191) CNT(2) KCACHE0(CB1:0-15) 
+     54  x: PREDE_INT   ____,  KC0[6].y,  (0x00000002, 2.802596929e-45f).x      UPDATE_EXEC_MASK UPDATE_PRED 
+52 JUMP  ADDR(55) 
+53 ALU: ADDR(193) CNT(9) KCACHE0(CB1:0-15) 
+     55  x: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).x      
+         z: LSHL        ____,  R2.w,  (0x00000010, 2.242077543e-44f).y      VEC_120 
+         w: LSHL        ____,  R2.y,  (0x00000010, 2.242077543e-44f).y      
+     56  x: OR_INT      R0.x,  R2.x,  PV55.w      
+         y: ADD_INT     ____,  KC0[2].x,  PV55.x      
+         t: OR_INT      R0.y,  R2.z,  PV55.z      
+     57  x: LSHR        R1.x,  PV56.y,  (0x00000002, 2.802596929e-45f).x      
+54 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].xy__, R0, ARRAY_SIZE(4)  VPM 
+55 ELSE POP_CNT(1) ADDR(63) 
+56 ALU: ADDR(202) CNT(1) KCACHE0(CB1:0-15) 
+     58  y: SETNE_INT   R0.y,  KC0[6].y,  1      
+57 PUSH ADDR(65) POP_CNT(7) 
+58 ALU: ADDR(203) CNT(1) 
+     59  x: PREDE_INT   ____,  R0.y,  0.0f      UPDATE_EXEC_MASK UPDATE_PRED 
+59 JUMP  POP_CNT(5) ADDR(64) 
+60 ALU: ADDR(204) CNT(12) KCACHE0(CB1:0-15) 
+     60  x: LSHL        ____,  R0.w,  (0x00000002, 2.802596929e-45f).x      
+         y: LSHL        T0.y,  R2.y,  (0x00000008, 1.121038771e-44f).y      
+         z: LSHL        ____,  R2.w,  (0x00000018, 3.363116314e-44f).z      VEC_120 
+         w: LSHL        T0.w,  R2.z,  (0x00000010, 2.242077543e-44f).w      
+     61  x: ADD_INT     ____,  KC0[2].x,  PV60.x      
+         y: OR_INT      ____,  R2.x,  PV60.z      
+     62  x: OR_INT      ____,  T0.w,  PV61.y      
+         t: LSHR        R1.x,  PV61.x,  (0x00000002, 2.802596929e-45f).x      
+     63  x: OR_INT      R0.x,  T0.y,  PV62.x      
+61 MEM_RAT_CACHELESS_STORE_RAW: RAT(0)[R1].x___, R0, ARRAY_SIZE(4)  VPM 
+62 POP (2) ADDR(63) 
+63 POP (3) ADDR(64) 
+64 POP (3) ADDR(65) 
+65 NOP NO_BARRIER 
+END_OF_PROGRAM
+
+; ----------------- CS Data ------------------------
+; Input Semantic Mappings
+;    No input mappings
+
+GprPoolSize = 0
+CodeLen                 = 1808;Bytes
+PGM_END_CF              = 0; words(64 bit)
+PGM_END_ALU             = 0; words(64 bit)
+PGM_END_FETCH           = 0; words(64 bit)
+MaxScratchRegsNeeded    = 0
+;AluPacking              = 0.0
+;AluClauses              = 0
+;PowerThrottleRate       = 0.0
+; texResourceUsage[0]     = 0x00000000
+; texResourceUsage[1]     = 0x00000000
+; texResourceUsage[2]     = 0x00000000
+; texResourceUsage[3]     = 0x00000000
+; fetch4ResourceUsage[0]  = 0x00000000
+; fetch4ResourceUsage[1]  = 0x00000000
+; fetch4ResourceUsage[2]  = 0x00000000
+; fetch4ResourceUsage[3]  = 0x00000000
+; texSamplerUsage         = 0x00000000
+; constBufUsage           = 0x00000000
+ResourcesAffectAlphaOutput[0]  = 0x00000000
+ResourcesAffectAlphaOutput[1]  = 0x00000000
+ResourcesAffectAlphaOutput[2]  = 0x00000000
+ResourcesAffectAlphaOutput[3]  = 0x00000000
+
+;SQ_PGM_RESOURCES        = 0x30000203
+SQ_PGM_RESOURCES:NUM_GPRS     = 3
+SQ_PGM_RESOURCES:STACK_SIZE           = 2
+SQ_PGM_RESOURCES:PRIME_CACHE_ENABLE   = 1
+;SQ_PGM_RESOURCES_2      = 0x000000C0
+SQ_LDS_ALLOC:SIZE        = 0x00000000
+; RatOpIsUsed = 0x1
+; NumThreadPerGroupFlattened = 128
+; SetBufferForNumGroup = true

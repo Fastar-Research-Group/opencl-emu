@@ -1,0 +1,31 @@
+﻿Build started 6/22/2012 7:05:16 PM.
+     1>Project "C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\clemu\clemu.vcxproj" on node 3 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "clemulib\clemu.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "clemulib\clemu.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\AMD APP\\include" /IC:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\include /IC:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\runCL /ZI /nologo /W1 /WX- /Od /Oy- /D NOMINMAX /Gm- /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"clemulib\\" /Fd"clemulib\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt clemu.cpp clemu_image.cpp clemu_intnl.cpp clemu_runtime.cpp stdafx.cpp
+         clemu.cpp
+         clemu_image.cpp
+         clemu_intnl.cpp
+         clemu_runtime.cpp
+         stdafx.cpp
+         Generating Code...
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl-emu_app\src\clemulib\clemu.lib) does not match the Library's OutputFile property value (C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\lib\debug\x86\clemu.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\lib\debug\x86\clemu.lib" /NOLOGO clemulib\clemu.obj
+         clemulib\clemu_image.obj
+         clemulib\clemu_intnl.obj
+         clemulib\clemu_runtime.obj
+         clemulib\stdafx.obj
+     1>clemu.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+         clemu.vcxproj -> C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl-emu_app\src\clemulib\clemu.lib
+       FinalizeBuildStatus:
+         Deleting file "clemulib\clemu.unsuccessfulbuild".
+         Touching "clemulib\clemu.lastbuildstate".
+     1>Done Building Project "C:\AlexProjects\support\terra\depot\main\sw\advtech\tools\opencl_emu\clemu\clemu.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:39.98
