@@ -19,6 +19,9 @@
 % Not all OpenCL 2.1 functionality has been tested yet.
 
 ==========[ opencl-emu ]============================
+Version 0.11 
+Minor updates to source and project files. Now tested in VS2012. 
+
 Version 0.1 
 The Original AMD Opensource Project 
  2012-10-12 => 2012-Oct-12 i.e. Sortable date 
@@ -26,3 +29,5 @@ The Original AMD Opensource Project
 The original opencl-emu opensource repository downloaded from
 "http://developer.amd.com/tools-and-sdks/opencl-zone/opencl-emulator-debugger/"
 as filename ocl_emu-101212.zip. This version was done in VS2008.
+
+
