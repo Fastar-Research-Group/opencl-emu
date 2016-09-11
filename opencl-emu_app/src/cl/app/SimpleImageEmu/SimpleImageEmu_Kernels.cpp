@@ -1,13 +1,14 @@
+
 /* ============================================================
 
-Copyright (c) 2009 Advanced Micro Devices, Inc.  All rights reserved.
- 
+Copyright (c) 2010 Advanced Micro Devices, Inc.  All rights reserved.
+
 Redistribution and use of this material is permitted under the following 
 conditions:
- 
+
 Redistributions must retain the above copyright notice and all terms of this 
 license.
- 
+
 In no event shall anyone redistributing or accessing or using this material 
 commence or participate in any arbitration or legal action relating to this 
 material against Advanced Micro Devices, Inc. or any copyright holders or 
@@ -89,177 +90,53 @@ jurisdiction and venue of these courts.
 
 ============================================================ */
 
+/*
+ * For a description of the algorithm and the terms used, please see the
+ * documentation for this sample.
+ *
+ * Each work-item invocation of this kernel, calculates the position for 
+ * one particle
+ *
+ * Work-items use local memory to reduce memory bandwidth and reuse of data
+ */
 
-//
-// Copyright (c) 2009 Advanced Micro Devices, Inc. All rights reserved.
-//
+#include "clemu_opencl.h"
 
-// http://stackoverflow.com/questions/18493400/opencl-compiling-with-c-bindings
-// 4>c:\program files (x86)\amd app sdk\3.0\include\cl\cl.hpp(4757): error C2039: 'resize' : is not a member of 'cl::vector<T>'
-// 
-// cl::vector<> has been deprecated.
-// By default cl.hpp should pick std::vector<> as the default vector class.
-// Maybe you defined __NO_STD_VECTOR or you are using cl::vector<> yourself?
+__constant sampler_t imageSampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP | CLK_FILTER_NEAREST; 
 
+/* Copy input 2D image to output 2D image */
+//__kernel void image2dCopy(__read_only image2d_t input, __write_only image2d_t output)
+__Kernel(image2dCopy)
+         __ArgFirst(__read_only image2d_t, input)
+         __ArgLast( __write_only image2d_t, output)
 
-#include <cstdio>
-#include <cstdlib>
-#include <iostream>
-
-
-// #define __NO_STD_VECTOR
-#define __NO_STD_STRING
-
-//EXTERNAL
-#include "runCL.h"
-
-#include <CL/cl.hpp>
-
-#include <SDKUtil/SDKFile.hpp>
-#include <SDKUtil/SDKCommon.hpp>
-
-#define DEFAULT_KERNEL_LOCATION "./"
-
-
-int
-main()
 {
-    cl_int err;
+//	int2 coord = (int2)(get_global_id(0), get_global_id(1));
+	int2 coord;
+	     coord.x = (int)get_global_id(0);
+		 coord.y = (int)get_global_id(1);
 
+	uint4 temp = read_imageui(input, imageSampler, coord);
 
-    std::cout<<"Hello OpenCl App\n";
-
-#if 1
-int workgroup_sz = 64;
-    cl_int status;
-	ClKrnlArg Args[1024];
-
-
-
-int localThreads[] = {8, workgroup_sz/8};
-int globalThreads[] = {2*localThreads[0],2*localThreads[1]};
-
-// EMULATOR
-    std::cout<<"\ngpu_emu run\n";
-	status = callCL("gpu_emu", 2, globalThreads, localThreads, DEFAULT_KERNEL_LOCATION, "HelloCL_Kernels.cpp", "hello",  NULL);
-
-// CPU
-    std::cout<<"\ncpu run\n";
-	status = callCL("cpu", 2, globalThreads, localThreads, DEFAULT_KERNEL_LOCATION, "HelloCL_Kernels.cpp", "hello",  NULL);
-
-// GPU
-    std::cout<<"\ngpu run\n";
-	status = callCL("gpu", 2, globalThreads, localThreads, DEFAULT_KERNEL_LOCATION, "HelloCL_Kernels.cpp", "hello",  NULL);
-
-#else
-    // Platform info
-    cl::vector<cl::Platform> platforms;
-    std::cout<<"HelloCL!\nGetting Platform Information\n";
-    err = cl::Platform::get(&platforms);
-    if(err != CL_SUCCESS)
-    {
-        std::cerr << "Platform::get() failed (" << err << ")" << std::endl;
-        return SDK_FAILURE;
-    }
-
-    cl::vector<cl::Platform>::iterator i;
-    if(platforms.size() > 0)
-    {
-        for(i = platforms.begin(); i != platforms.end(); ++i)
-        {
-            if(!strcmp((*i).getInfo<CL_PLATFORM_VENDOR>(&err).c_str(), "Advanced Micro Devices, Inc."))
-            {
-                break;
-            }
-        }
-    }
-    if(err != CL_SUCCESS)
-    {
-        std::cerr << "Platform::getInfo() failed (" << err << ")" << std::endl;
-        return SDK_FAILURE;
-    }
-
-    /* 
-     * If we could find our platform, use it. Otherwise pass a NULL and get whatever the
-     * implementation thinks we should be using.
-     */
-
-    cl_context_properties cps[3] = { CL_CONTEXT_PLATFORM, (cl_context_properties)(*i)(), 0 };
-
-    std::cout<<"Creating a context AMD platform\n";
-    cl::Context context(CL_DEVICE_TYPE_CPU, cps, NULL, NULL, &err);
-    if (err != CL_SUCCESS) {
-        std::cerr << "Context::Context() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-
-    std::cout<<"Getting device info\n";
-    cl::vector<cl::Device> devices = context.getInfo<CL_CONTEXT_DEVICES>();
-    if (err != CL_SUCCESS) {
-        std::cerr << "Context::getInfo() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-    if (devices.size() == 0) {
-        std::cerr << "No device available\n";
-        return SDK_FAILURE;
-    }
-
-    std::cout<<"Loading and compiling CL source\n";
-	streamsdk::SDKFile file;
-    if (!file.open("HelloCL_Kernels.cl")) {
-         std::cerr << "We couldn't load CL source code\n";
-         return SDK_FAILURE;
-    }
-	cl::Program::Sources sources(1, std::make_pair(file.source().data(), file.source().size()));
-
-    cl::Program*    pProgram;
-	pProgram = new cl::Program(context, sources);
-    if (err != CL_SUCCESS) {
-        std::cerr << "Program::Program() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-    cl::Program&    program = *pProgram;
-    err = program.build(devices);
-    if (err != CL_SUCCESS) {
-        std::cerr << "Program::build() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-
-    cl::Kernel kernel(program, "hello", &err);
-    if (err != CL_SUCCESS) {
-        std::cerr << "Kernel::Kernel() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-    if (err != CL_SUCCESS) {
-        std::cerr << "Kernel::setArg() failed (" << err << ")\n";
-        return SDK_FAILURE;
-    }
-
-    cl::CommandQueue queue(context, devices[0], 0, &err);
-    if (err != CL_SUCCESS) {
-        std::cerr << "CommandQueue::CommandQueue() failed (" << err << ")\n";
-    }
-
-    std::cout<<"Running CL program\n";
-    err = queue.enqueueNDRangeKernel(
-        kernel, cl::NullRange, cl::NDRange(4, 4), cl::NDRange(2, 2)
-    );
-
-    if (err != CL_SUCCESS) {
-        std::cerr << "CommandQueue::enqueueNDRangeKernel()" \
-            " failed (" << err << ")\n";
-       return SDK_FAILURE;
-    }
-
-    err = queue.finish();
-    if (err != CL_SUCCESS) {
-        std::cerr << "Event::wait() failed (" << err << ")\n";
-    }
-
-    delete pProgram;
-
-#endif
-
-    std::cout<<"Done\nPassed!\n";
-    return SDK_SUCCESS;
+	write_imageui(output, coord, temp);
+	__Return;
 }
+
+/* Copy input 3D image to 2D image */
+//__kernel void image3dCopy(__read_only image3d_t input, __write_only image2d_t output)
+__Kernel(image3dCopy)
+         __ArgFirst(__read_only image3d_t, input)
+         __ArgLast( __write_only image2d_t, output)
+{
+	int2 coord = (int2)(get_global_id(0), get_global_id(1));
+
+	/* Read first slice into lower half */
+	uint4 temp0 = read_imageui(input, imageSampler, (int4)(coord, 0, 0));
+
+	/* Read second slice into upper half */
+	uint4 temp1 = read_imageui(input, imageSampler, (int4)((int2)(get_global_id(0), get_global_id(1) - get_global_size(1)/2), 1, 0));
+	
+	write_imageui(output, coord, temp0 + temp1);
+	__Return;
+}
+

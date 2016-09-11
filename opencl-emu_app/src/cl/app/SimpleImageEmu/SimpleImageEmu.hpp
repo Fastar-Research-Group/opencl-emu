@@ -109,8 +109,8 @@ jurisdiction and venue of these courts.
 
 
 
-#define INPUT_IMAGE "SimpleImage_Input.bmp"
-#define OUTPUT_IMAGE "SimpleImage_Output.bmp"
+#define INPUT_IMAGE "SimpleImageEmu_Input.bmp"
+#define OUTPUT_IMAGE "SimpleImageEmu_Output.bmp"
 
 #define GROUP_SIZE 256
 

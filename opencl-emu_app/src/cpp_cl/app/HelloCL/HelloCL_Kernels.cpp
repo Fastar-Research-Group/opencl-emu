@@ -89,9 +89,6 @@ jurisdiction and venue of these courts.
 
 ============================================================ */
 
-
-
-
 //#define KA
 #ifdef KA
 #include "C:\Users\alyashev\alyashev_advtechmoreenvy\main\sw\advtech\tools\opencl_emu\clemu\clemu_opencl.h"

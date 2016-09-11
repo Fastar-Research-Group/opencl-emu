@@ -301,7 +301,7 @@ SimpleImage::genBinaryImage()
     /* create a CL program using the kernel source */
     streamsdk::SDKFile kernelFile;
     std::string kernelPath = sampleCommon->getPath();
-    kernelPath.append("SimpleImage_Kernels.cl");
+    kernelPath.append("SimpleImageEmu_Kernels.cl");
     if(!kernelFile.open(kernelPath.c_str()))
     {
         std::cout << "Failed to load kernel file : " << kernelPath << std::endl;
