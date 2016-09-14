@@ -1,4 +1,7 @@
 # opencl-emu 
+
+The [OpenCL™ Emulator-Debugger (ocl-emu)](http://developer.amd.com/tools-and-sdks/opencl-zone/opencl-emulator-debugger/) is an open source project originating at AMD that allows you to compile and debug OpenCL™ kernels as C++ procedures. The goal of the project is to provide OpenCL™ developers with the full support of Microsoft® Visual Studio® C++ development and debugging environments.
+
 ## Disclaimer
 Not all OpenCL 2.1 functionality has been tested yet.
 ## License
@@ -28,6 +31,6 @@ None received yet
 ### Version 0.1 
 * The Original AMD Opensource Project - 2012-10-12 => 2012-Oct-12 i.e. Sortable date 
 
-* The original opencl-emu opensource repository downloaded from [AMD](http://developer.amd.com/tools-and-sdks/opencl-zone/opencl-emulator-debugger/) as filename ocl_emu-101212.zip. This version was done in VS2008.
+* The original opencl-emu opensource repository downloaded from the following [AMD source-tree](https://code.google.com/archive/p/ocl-emu/source) as filename ocl_emu-101212.zip. This version was done in VS2008.
 
 
