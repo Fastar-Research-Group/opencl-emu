@@ -80,13 +80,19 @@ SDKBitMap::load(const char * filename)
     releaseResources();
 
     // Open BMP file
-    FILE * fd = fopen(filename, "rb");
-    // FILE *fd; 
-    //fopen_s(&fd, filename, "rb");
+     FILE * fd;
+	#ifdef CRT_SECURE_WARNINGS
+		FILE * fd = fopen(filename, "rb");
+		// Opened OK
+		if (fd != NULL) {
+	#else
+		errno_t err = 0;
+	    err = fopen_s( &fd, filename,"rb");
+		// Opened OK
+		if ( err==0 ) {
+	#endif
 
-    // Opened OK
-    if (fd != NULL) {
-        // Read header
+		// Read header
         fread((BitMapHeader *)this, sizeof(BitMapHeader), 1, fd);
 
         // Failed to read header
@@ -232,13 +238,18 @@ SDKBitMap::write(const char * filename)
     }
 
     // Open BMP file
-    FILE * fd = fopen(filename, "wb");
-    //FILE * fd;
-    //fopen_s(&fd, filename, "wb");
+    FILE * fd;
+	#ifdef CRT_SECURE_WARNINGS
+		FILE * fd = fopen(filename, "wb");
+		// Opened OK
+		if (fd != NULL) {
+	#else
+		errno_t err = 0;
+	    err = fopen_s( &fd, filename,"wb");
+		// Opened OK
+		if ( err==0 ) {
+	#endif
 
-
-    // Opened OK
-    if (fd != NULL) {
         // Write header
         fwrite((BitMapHeader *)this, sizeof(BitMapHeader), 1, fd);
 

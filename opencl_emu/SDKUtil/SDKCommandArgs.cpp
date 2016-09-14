@@ -49,7 +49,12 @@ int SDKCommandArgs::match(char ** argv, int argc)
 				//FIXME: need to add failure code
 				if(argc > 1)
 				{
+				#ifdef CRT_SECURE_WARNINGS
 					sscanf(*(argv+1), "%d", (int *)_options[count]._value);
+				#else
+					errno_t err = 0;
+					err = sscanf_s(*(argv+1), "%d",  (int *)_options[count]._value, 1);
+				#endif
 					matched++; //Jay added
 				}
 				else

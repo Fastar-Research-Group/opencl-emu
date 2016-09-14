@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.  
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -392,6 +393,7 @@ int ret = CL_EMU_SUCCESS;
  char root_location[512];
  char propert_file_location[512];
  FILE * property_file;
+ errno_t err = 0;
 
 
 
@@ -410,8 +412,13 @@ int ret = CL_EMU_SUCCESS;
 	  }
     
       sprintf_s(propert_file_location,512,"%s%s\\%s.txt", root_location, DEFAULTE_PROPERTY_FOLDER, DEFAULT_EMULATOR_PROPERTIES_NM);
-	  property_file = fopen( propert_file_location,"rt");
-	  if ( property_file )
+	  #ifdef CRT_SECURE_WARNINGS
+			property_file = fopen( propert_file_location,"rt");
+			if ( property_file )
+	  #else
+	        err = fopen_s( &property_file, propert_file_location,"rt");
+			if ( err==0 )
+	  #endif
 	  {
 char in_buffer[512];
 char data_buffer[512];
@@ -420,17 +427,31 @@ int class_len = strlen("class=");
 int found_class, found_device;
 
           fgets( in_buffer, 512, property_file);
+	  #ifdef CRT_SECURE_WARNINGS
           sscanf(in_buffer, "emu_class=%s\n",  data_buffer);
+	  #else
+		  err = sscanf_s(in_buffer, "emu_class=%s\n",  data_buffer, sizeof(data_buffer));
+	  #endif
 		  SetDevClass( (const char * )data_buffer);
 
           fgets( in_buffer, 512, property_file);
+	  #ifdef CRT_SECURE_WARNINGS
           sscanf(in_buffer, "emu_name=%s\n",  data_buffer);
-		  SetDevNm( (const char * )data_buffer);
+	  #else
+		  err = 0;
+		  err = sscanf_s(in_buffer, "emu_class=%s\n",  data_buffer, sizeof(data_buffer));
+	  #endif
+		  //SetDevNm( (const char * )data_buffer);   // This line sets m_name to evergreen, not sure if that was intended
 
           found_class = 0;
 		  while(fgets( in_buffer, 512, property_file))
 		  {
-             sscanf(in_buffer, "class=%s\n",  data_buffer);
+		  #ifdef CRT_SECURE_WARNINGS
+              sscanf(in_buffer, "class=%s\n",  data_buffer);
+		  #else
+			  errno_t err = 0;
+			  err = sscanf_s(in_buffer, "class=%s\n",  data_buffer, sizeof(data_buffer));
+		  #endif
 			 if  (!strcmp(data_buffer, m_class))
 			 {
                     found_class = 1;
@@ -443,10 +464,16 @@ int found_class, found_device;
                found_device = 0;
 		       while(fgets( in_buffer, 512, property_file))
 		       {
+		  #ifdef CRT_SECURE_WARNINGS
                     sscanf(in_buffer, "name=%s\n",  data_buffer);
+		  #else
+					errno_t err = 0;
+					err = sscanf_s(in_buffer, "name=%s\n",  data_buffer, sizeof(data_buffer));
+		  #endif
 			        if  (!strcmp(data_buffer, m_name))
 			        {
                          found_device = 1;
+						 SetDevNm( (const char * )data_buffer);
 				         break;
 			        }
 		       }
@@ -464,7 +491,12 @@ int found_class, found_device;
 				   for(int p = 0; emulator_device_properties_nm[p]; p++)
 				   {
 				      sprintf_s(format_buffer,512,"%s.%s=%%d\n", m_name,emulator_device_properties_nm[p]);
-                      fscanf(property_file, format_buffer,  &propery);
+					  #ifdef CRT_SECURE_WARNINGS
+	                            fscanf(property_file, format_buffer,  &propery);
+					  #else
+								errno_t err = 0;
+								err = fscanf_s(property_file, format_buffer,  &propery, sizeof(propery));
+					  #endif
                       if ( !strcmp(emulator_device_properties_nm[p], "se" ) )
 					  {
                           m_nbr_SE = propery;
@@ -862,7 +894,7 @@ int runCLEMU(const char * _device_type,
 		   int _group[],
 		   const char * _program_location,
 		   const char * _program_nm,
-		   const char*_kernel_entry_name,
+		   const char * _kernel_entry_name,
 		   int _nbr_arg,
 		   ClKrnlArg _args[])
 {

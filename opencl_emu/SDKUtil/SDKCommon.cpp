@@ -618,7 +618,7 @@ void SDKCommon::printTable(Table *t)
 bool 
 SDKCommon::fileToString(std::string &fileName, std::string &str)
 {
-    size_t      size;
+    std::streamoff      size;
     char*       buf;
 
     // Open file stream
@@ -627,7 +627,7 @@ SDKCommon::fileToString(std::string &fileName, std::string &str)
     // Check if we have opened file stream
     if (f.is_open()) 
 	{
-        size_t  sizeFile;
+        std::streamoff  sizeFile;
 
         // Find the stream size
         f.seekg(0, std::fstream::end);

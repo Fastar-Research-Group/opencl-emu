@@ -31,8 +31,14 @@ bool
 SDKFile::writeBinaryToFile(const char* fileName, const char* birary, size_t numBytes)
 {
     FILE *output = NULL;
-    output = fopen(fileName, "wb");
-    if(output == NULL)
+	#ifdef CRT_SECURE_WARNINGS
+	    output = fopen(fileName, "wb");
+		if(output == NULL)
+	#else
+		errno_t err = 0;
+	    err = fopen_s( &output, fileName,"wb");
+		if ( err!=0 )
+	#endif
         return false;
 
     fwrite(birary, sizeof(char), numBytes, output);
@@ -49,8 +55,14 @@ SDKFile::readBinaryFromFile(const char* fileName)
     size_t size = 0;
     char* binary = NULL;
 
-    input = fopen(fileName, "rb");
-    if(input == NULL)
+	#ifdef CRT_SECURE_WARNINGS
+	    input = fopen(fileName, "rb");
+		if(input == NULL)
+	#else
+		errno_t err = 0;
+	    err = fopen_s( &input, fileName,"rb");
+		if ( err!=0 )
+	#endif
     {
         return false;
     }
@@ -77,7 +89,7 @@ bool
 SDKFile::open(
     const char* fileName)   //!< file name
 {
-    size_t      size;
+    std::streamoff      size;
     char*       str;
 
     // Open file stream
@@ -85,7 +97,7 @@ SDKFile::open(
 
     // Check if we have opened file stream
     if (f.is_open()) {
-        size_t  sizeFile;
+        std::streamoff  sizeFile;
         // Find the stream size
         f.seekg(0, std::fstream::end);
         size = sizeFile = f.tellg();

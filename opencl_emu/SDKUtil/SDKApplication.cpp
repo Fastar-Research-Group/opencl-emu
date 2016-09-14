@@ -1,5 +1,13 @@
 #include <SDKUtil/SDKApplication.hpp>
 
+//_ITERATOR_DEBUG_LEVEL = 0 // disabled (for release builds)
+//_ITERATOR_DEBUG_LEVEL = 1 // enabled (if _SECURE_SCL is defined)
+//_ITERATOR_DEBUG_LEVEL = 2 // enabled (for debug builds)
+
+// These can mismatch if
+// Mixing binaries (object files) is one reason; another (which I encountered) is the false definition of the _DEBUG macro in the release build. _DEBUG is not a standard macro, but used by Microsoft.
+// After editing the .vcxproj-file in Emacs I mistyped _DEBUG instead of NDEBUG for the release, and encountered precisely the same build erro
+
 int 
 SDKSample::initialize()
 {
@@ -189,7 +197,7 @@ SDKSample::SDKSample(std::string sampleName, bool enableMultiDevice)
 	quiet = 0;
 	verify = 0;
 	timing = 0;
-    deviceType = "gpu";
+    deviceType = "gpu_emu";
     multiDevice = enableMultiDevice;
     deviceId = 0;
 }
@@ -202,7 +210,7 @@ SDKSample::SDKSample(const char* sampleName, bool enableMultiDevice)
 	quiet = 0;
 	verify = 0;
 	timing = 0;
-    deviceType = "gpu";
+    deviceType = "gpu_emu";
     multiDevice = enableMultiDevice;
     deviceId = 0;
 }

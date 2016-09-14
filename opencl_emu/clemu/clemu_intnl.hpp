@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.  
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -83,8 +84,9 @@ INTERNAL EMU
 #define CLEMU_DEV_NAME_SZ        128
 #define DEFAULTE_PROPERTY_FOLDER  "properties"
 #define DEFAULT_DEVCLASS         "evergreen"
+#define DEFAULT_DEVNAME         "Juniper"
 //#define DEFAULT_DEVNAME          "Cedar"
-#define DEFAULT_DEVNAME          "Redwood"
+//#define DEFAULT_DEVNAME          "Redwood"
 #define DEFAULT_PROPERTIES_NM    "device_sheet"
 #define DEFAULT_EMULATOR_PROPERTIES_NM    "emulator_device_sheet"
 
