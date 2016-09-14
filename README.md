@@ -1,6 +1,7 @@
-# --------------------------------------------------------------------------------------------------------------------------------------------------------
+# ==========[ opencl-emu ]============================
 # opencl-emu 
-# --------------------------------------------------------------------------------------------------------------------------------------------------------
+# ====================================================
+
 # Modified BSD License (2011):
 # 
 # Original work Copyright (c) 2011 Advanced Micro Devices, Inc.  
@@ -41,21 +42,22 @@
 # Country Group listings, or for additional information about the EAR or your obligations under those regulations, please refer to the U.S. Bureau of Industry and
 # Security’s website at http://www.bis.doc.gov/. 
 # 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# ====================================================
+
 # Please send updates and/or report errors to pieter@fastar.org. Will give recognition, if
 # requested, after any valid comment leading to an update was recieved. 
+# Please give around a week to get a response.
 
 # Author of modifications: Pieter Vernon Reyneke
 # Acknowledgement to original authors: AMD alyashev 
 
 
 # Contributors 
-# None Yet
+# None received yet
 
 # Disclaimer
 # Not all OpenCL 2.1 functionality has been tested yet.
 
-==========[ opencl-emu ]============================
 Version 0.11 
 Minor updates to source and project files. Now tested in VS2012. 
 
