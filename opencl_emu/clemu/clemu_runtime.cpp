@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2009 Advanced Micro Devices, Inc.
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:

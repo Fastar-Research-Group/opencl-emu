@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -185,8 +186,13 @@ double as_double( __int64 _A);
 
 inline int isinf(float x) 
 {
+#if (_MSC_VER >= 1700)
+float FLT_INFINITY = as_float(PINFBITPATT_SP32);
+	return(fabsf(x) == FLT_INFINITY);
+#else
 float INFINITY = as_float(PINFBITPATT_SP32);
-   return(fabsf(x) == INFINITY);
+	return(fabsf(x) == INFINITY);
+#endif
 }  	
 inline int isinf(double x) 
 {
@@ -196,9 +202,15 @@ double DBL_INFINITY = as_double(PINFBITPATT_DP64);
 
 inline int isfinite(float x)
 { 
+#if (_MSC_VER >= 1700)
+float FLT_INFINITY = as_float(PINFBITPATT_SP32);
+	return(fabsf(x) == FLT_INFINITY);
+#else
 float INFINITY = as_float(PINFBITPATT_SP32);
-   return(fabsf(x) < INFINITY);
+	return(fabsf(x) == INFINITY);
+#endif
 }
+
 inline int isfinite(double x)
 { 
 double DBL_INFINITY = as_double(PINFBITPATT_DP64);
@@ -217,8 +229,13 @@ inline int isnan(double _a)
 
 inline int isnormal(float x)
 {
+#if (_MSC_VER >= 1700)
+float FLT_INFINITY = as_float(PINFBITPATT_SP32);
+	return(fabsf(x) < FLT_INFINITY && fabsf(x) >= FLT_MIN);
+#else
 float INFINITY = as_float(PINFBITPATT_SP32);
    return(fabsf(x) < INFINITY && fabsf(x) >= FLT_MIN);
+#endif
 }
 inline int isnormal(double x)
 {
@@ -325,7 +342,6 @@ static double as_double( unsigned __int64 _A)
 {
 	return (*(double*)(&_A));
 }
-
 
 inline int as_int( float _A)
 {
@@ -559,7 +575,9 @@ multiply_signed_64_by_64( __LONG A, __LONG B, __ULONG *destLo, __LONG *destHi )
     *destHi = (__LONG) hi;
 }
 
+#ifndef _CMATH_
 static double copysign( double _a, double _b);
+#endif
 
 typedef union {
   double d;
@@ -577,6 +595,7 @@ two54   =  1.80143985094819840000e+16, /* 0x43500000, 0x00000000 */
 twom54  =  5.55111512312578270212e-17, /* 0x3C900000, 0x00000000 */
 really_big   = 1.0e+300,
 tiny   = 1.0e-300;
+
 
 static
 double scalb (double x, int n)
@@ -674,7 +693,6 @@ double rint(double x)
 }
 
 
-
 static double nextafter(double x, double y)
 {
         int     hx,hy,ix,iy;
@@ -735,6 +753,7 @@ static double nextafter(double x, double y)
         return x;
 }
 
+#ifndef _CMATH_
 
 //-----------------------------------------------------------------------------
 // File: nextafter.cl
@@ -774,6 +793,8 @@ float ret = as_float(next);
     return(ret);
 }
 
+#endif // _CMATH_
+
 //-----------------------------------------------------------------------------
 // File: nan.cl
 //-----------------------------------------------------------------------------
@@ -791,6 +812,7 @@ __LONG nan_code = (_InNANCode & MANTBITS_DP64);
 double ret = as_double( QNANBITPATT_DP64 | nan_code);
    return(ret);
 }
+
 
 
 #endif //_MATHFUNCTIONS_HCL_

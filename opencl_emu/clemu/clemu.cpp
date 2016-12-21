@@ -48,7 +48,7 @@ Security’s website at http://www.bis.doc.gov/.
 #include "clemu.hpp"
 #include "SDKUtil/SDKCommon.hpp"
 
-
+#define _MAIN (0)
 
 #if _MAIN
 #include "stdafx.h"

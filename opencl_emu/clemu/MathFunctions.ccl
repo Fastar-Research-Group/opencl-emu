@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -39,7 +40,6 @@ Country Group listings, or for additional information about the EAR or your obli
 Security’s website at http://www.bis.doc.gov/. 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
 
 
 #include "MathFunctions.hcl"
@@ -147,6 +147,7 @@ static int islessgreater (float x, float y)
    return(!isnan(x) && !isnan(y) && (x<y || x>y));
 }
 
+
 //inline int isinf(float x) 
 //inline int isfinite(float x)
 //inline int isnan(float _a)
@@ -169,6 +170,8 @@ static int isunordered (float x, float y)
    return(isnan(x) || isnan(y));  
 }
 
+#ifndef _CMATH_
+
 //Test for sign bit. The scalar version of the function
 //returns a 1 if the sign bit in the float is set else returns 0.
 //The vector version of the function returns the following
@@ -179,7 +182,7 @@ static int signbit (float x)
    return( (as_int(x) & 0x80000000) == 0x80000000);
 }
 
-
+#endif
 
 //Returns the component-wise compare of x == y.
 
@@ -246,6 +249,8 @@ static int isunordered (double x, double y)
    return(isnan(x) || isnan(y));  
 }
 
+#ifndef _CMATH_
+
 //Test for sign bit. The scalar version of the function
 //returns a 1 if the sign bit in the double is set else returns 0.
 //The vector version of the function returns the following
@@ -258,10 +263,7 @@ fd_twoints t;
    return( (__HI(t) & 0x80000000) == 0x80000000);
 }
 
-
-
-
-
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -1354,6 +1356,7 @@ __ULONG lo;
     return(r);
 }
 
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * max
@@ -1730,6 +1733,7 @@ __ULONG r = 0;
     return(r);
 }
 
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * upsample
@@ -1782,6 +1786,7 @@ __ULONG r = 0;
     r = ((__ULONG)hi << 32) | lo;
     return(r);
 }
+
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -1848,8 +1853,9 @@ float mul(float _a, float _b);
 static
 double mul(double _a, double _b);
 static double trunc( double _a);
+#ifndef _CMATH_
 static float trunc( float _a);
-
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -1864,6 +1870,8 @@ double ret = log(_a + sqrt(_a*_a - 1));
       return(ret);
 }
 
+#ifndef _CMATH_
+
 static
 float acosh(float _a)
 {
@@ -1871,7 +1879,7 @@ float ret = (float)(double)acosh((double)_a);
       return(ret);
 }
 
-
+#endif
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * acospi= acos(x)/pi
@@ -1904,12 +1912,16 @@ double ret = log(_a + sqrt(_a*_a + 1));
       return(ret);
 }
 
+#ifndef _CMATH_
+
 static
 float asinh(float _a)
 {
 float ret = (float)(double)asinh((double)_a);
       return(ret);
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -1947,12 +1959,16 @@ double ret = log((sqrt(-_a * _a + 1) + 1) / _a);
       return(ret);
 }
 
+#ifndef _CMATH_
+
 static
 float atanh(float _a)
 {
 float ret = (float)(double)atanh((double)_a);
       return(ret);
 }
+
+#endif
 
 
 /*---------------------------------------------------------------------------------------------------------------------
@@ -1991,6 +2007,8 @@ float ret;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * cbrt
@@ -2011,6 +2029,7 @@ float ret = (float)(double)cbrt((double)_a);
       return(ret);
 }
 
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * copysign(x,y)
@@ -2022,12 +2041,17 @@ double thesamesign = ((_a >= 0 && _b >=0) || (_a <0 && _b < 0))? 1 : -1;
 double ret = _a * thesamesign;
        return(ret);
 }
+
 static float copysign( float _a, float _b)
 {
 float thesamesign = ((_a >= 0 && _b >=0) || (_a <0 && _b < 0))? 1.f : -1.f;
 float ret = _a * thesamesign;
        return(ret);
 }
+
+#endif
+
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * cospi= cos(x * pi)
@@ -2047,6 +2071,7 @@ float cospi(float _a)
 float ret = (float)(double)cospi((double)_a);
       return(ret);
 }
+
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2091,11 +2116,15 @@ double erfc (double x)
     }
 }
 
+#ifndef _CMATH_
+
 static
 float erfc (float x)
 {
     return((float)(double)erfc((double)x));
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2109,13 +2138,15 @@ double erf (double x)
     return(1. - erfc(x));
 }
 
+#ifndef _CMATH_
+
 static
 float erf (float x)
 {
     return((float)(double)erf((double)x));
 }
 
-
+#endif
 
 
 /*---------------------------------------------------------------------------------------------------------------------
@@ -2130,11 +2161,15 @@ double ret = exp(log((double)2) * _a);
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float exp2( float _a)
 {
 float ret = (float)(double)exp2((double)_a);
 	   return ret;
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2169,11 +2204,15 @@ double ret = exp(_a) - 1.;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float expm1( float _a)
 {
 float ret = (float)(double)expm1((double)_a);
 	   return ret;
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2187,11 +2226,15 @@ double ret = (_a > _b) ? _a - _b : 0.;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float fdim( float _a, float _b)
 {
 float ret = (float)(double)fdim((double)_a, (double)_b);
 	   return ret;
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2204,11 +2247,15 @@ double ret = (_a * _b) + _c;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float fma( float _a, float _b, float _c)
 {
 float ret = (float)(double)fma((double)_a, (double)_b, (double)_c);
 	   return ret;
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -2221,11 +2268,15 @@ double ret = max(_a, _b);
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float fmax( float _a, float _b)
 {
 float ret = (float)(double)fmax((double)_a, (double)_b);
 	   return ret;
 }
+
+#endif
 
 static double fmin( double _a, double _b)
 {
@@ -2233,11 +2284,15 @@ double ret = min(_a, _b);
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float fmin( float _a, float _b)
 {
 float ret = (float)(double)fmin((double)_a, (double)_b);
 	   return ret;
 }
+
+#endif
 
 //Modulus. Returns x – y * trunc (x/y).
 
@@ -2268,7 +2323,6 @@ float ret;
 }
 
 
-
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * ilogb
@@ -2281,12 +2335,17 @@ int ret;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static int ilogb( float _a)
 {
 int ret;
        ret = ilogb((double)_a);
 	   return ret;
 }
+
+#endif
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * gamma
@@ -2295,9 +2354,6 @@ int ret;
 
 static double logb( double _a);
 static double log1p( double _a);
-
-
-
 
 /*-
  * Copyright (c) 1992, 1993
@@ -2349,9 +2405,6 @@ static double log1p( double _a);
 
 #  define ic(name, value, bexp, xval) \
 	static double const name = value;
-
-
-
 
 
 /*
@@ -2558,9 +2611,13 @@ gamma(
 	endian = (*(int *) &one) ? 1 : 0;
 
 	if (x >= 6) {
-		if(x > 171.63)
-			return(one/zero);
-		u = large_gam(x);
+		if (x > 171.63)
+#ifndef _CMATH_
+			return(one / zero);
+#else
+			return(as_double(PINFBITPATT_DP64));
+#endif
+			u = large_gam(x);
 		return(__exp__D(u.a, u.b));
 	} else if (x >= 1.0 + GLEFT + x0) {
 		return (small_gam(x));
@@ -2735,7 +2792,11 @@ neg_gam(double x)
 		if(!_IEEE)
 			return (infnan(ERANGE));
 		else
-			return (one/zero);
+#ifndef _CMATH_
+			return(one / zero);
+#else
+			return(as_double(PINFBITPATT_DP64));
+#endif
 	}
 	z = fabs(x - y);
 	y = .5*ceil(x);
@@ -3531,11 +3592,15 @@ gamma( float x)
    return((float)gamma((double)x));
 }
 
+#ifndef _CMATH_
+
 static float
 lgamma( float x)
 {
    return((float)lgamma((double)x));
 }
+
+#endif
 
 static float
 lgamma_r( float x, int *psign)
@@ -3556,12 +3621,17 @@ double ret;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float log2( float _a)
 {
 float ret;
        ret = (float)log2((double)_a);
 	   return ret;
 }
+
+#endif
+
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -3596,12 +3666,16 @@ double ret;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float log1p( float _a)
 {
 float ret;
        ret = (float)log1p((double)_a);
 	   return ret;
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -3615,12 +3689,17 @@ double ret;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float logb( float _a)
 {
 float ret;
        ret = (float)logb((double)_a);
 	   return ret;
 }
+
+#endif
+
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -3679,8 +3758,6 @@ double ret = _a * _b;
  */
 
 
-
-
 //static const double zero = 0.0;
 
 static
@@ -3731,12 +3808,14 @@ double remainder(double x, double p)
         return x;
 }
 
-
+#ifndef _CMATH_
 static
 float remainder(float x, float p)
 {
    return((float)remainder((double)x, (double)p));
 }
+
+#endif
 
 static
 double remquo(double x, double p, int *pquo)
@@ -3750,11 +3829,15 @@ __int64 qn = (__int64)q;
       return(ret);       
 }
 
+#ifndef _CMATH_
+
 static
 float remquo(float x, float p, int *pquo)
 {
       return((float)remquo(x,p,pquo));       
 }
+
+#endif
 
 
 /*---------------------------------------------------------------------------------------------------------------------
@@ -3763,11 +3846,16 @@ float remquo(float x, float p, int *pquo)
 *
 ---------------------------------------------------------------------------------------------------------------------*/
 
+#ifndef _CMATH_
+
 static float
 rint (float x)
 {
    return((float)rint((double)x));
 }
+
+#endif
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * rootn
@@ -3794,11 +3882,15 @@ double ret = ((_a - floor(_a)) < 0.5) ? floor(_a) : floor(_a) + 1.;
        return(ret);
 }
 
+#ifndef _CMATH_
+
 static float round( float _a)
 {
 float ret = (float)(double)round((double)_a);
        return(ret);
 }
+
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -3889,12 +3981,15 @@ tgamma(double x)
     return(gamma(x));
 }
 
+#ifndef _CMATH_
+
 static float
 tgamma(float x)
 {
     return(gamma(x));
 }
 
+#endif
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -3907,11 +4002,17 @@ double ret = (double)(__int64)_a;
 	   return ret;
 }
 
+#ifndef _CMATH_
+
 static float trunc( float _a)
 {
 float ret = (float)(double)trunc((double)_a);
 	   return ret;
 }
+
+#endif
+
+
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * native
@@ -4158,6 +4259,7 @@ float amd_unpack3 (uint src)
     return((float)((src >> 24) & 0xff));
 }
 
+
 static
 uint amd_bitalign (uint src0, uint src1, uint src2)
 {
@@ -4168,6 +4270,8 @@ uint amd_bytealign (uint src0, uint src1, uint src2)
 {
    return((uint) (((((__LONG)src0) << 32) | (__LONG)src1) >> ((src2 & 3)*8)));
 }
+
+
 static
 uint amd_lerp (uint src0, uint src1, uint src2)
 {
@@ -4196,13 +4300,12 @@ uint  amd_sadhi (uint src0, uint src1, uint src2)
                abs((int)(((src0 >> 24) & 0xff) - (int)((src1 >> 24) & 0xff)) << 16);
           return(dst);
 }
+
 /************************************************************************
 *
 * common
 *
 ************************************************************************/
-
-
 
 static double
 clamp(double x, double xmin, double xmax)
@@ -4236,7 +4339,6 @@ float r = 0;
     return(r);
 }
 
-
 /*---------------------------------------------------------------------------------------------------------------------
 *
 * max
@@ -4267,6 +4369,7 @@ float r = _CL_MIN(x,y);
     return(r);
 }
 
+
 double
 static min(double x, double y)
 {
@@ -4290,6 +4393,7 @@ float r = (float)mix((double)x, (double)y, (double)a);
     return(r);
 }
 
+
 static double
 radians(double degrees)
 {
@@ -4304,6 +4408,7 @@ radians(float degrees)
 float r = (float)radians((double)degrees);
     return(r);
 }
+
 
 static double
 step(double edge, double x)
@@ -4330,15 +4435,12 @@ double t = (x - edge0) / (edge1 - edge0);
     return(r);
 }
 
-
 static float
 smoothstep(float edge0, float edge1, float x)
 {
 float r = (float)smoothstep((double)edge0, (double)edge1, (double)x);
     return(r);
 }
-
-
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -4358,7 +4460,6 @@ double dot(double _a, double _b)
 double ret = mul(_a, _b);
    return(ret);
 }
-
 
 
 /*---------------------------------------------------------------------------------------------------------------------
@@ -4497,5 +4598,4 @@ double r = 0;
     r = normalize(p);
     return ( r );
 }
-
 

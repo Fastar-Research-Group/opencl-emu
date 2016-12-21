@@ -1,19 +1,23 @@
 #ifndef SDKCOMMON_HPP_
 #define SDKCOMMON_HPP_
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <sstream>
-#include <string>
-#include <ctime>
 #include <cmath>
-#include <time.h>
+#include <ctime>
+
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+#include <cstdlib>
+#include <cstring>
+#else
 #include <stdlib.h>
 #include <string.h>
+#endif
+
 #include <vector>
 #include <malloc.h>
-
 #include <CL/opencl.h>
 
 #ifdef _WIN32

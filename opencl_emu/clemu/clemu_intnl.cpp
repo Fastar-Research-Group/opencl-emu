@@ -297,7 +297,7 @@ int active_grp = nextJob->m_next_active_group;
 // local memory setup
 // EXPLANATION:
 // The size comes either from invokation (argument) or from teh kernel declaration.
-// if it comes from declaration for teh first group there will be 0 sz which is max size.
+// if it comes from declaration for the first group there will be 0 sz which is max size.
 // second group will det the correect size and will be separated from teh first group
 int local_mem_sz = (nextJob->m_localmem_sz > clemuGetCompiledKernelMemSz(nextJob->m_groups[active_grp].m_kernel)) ? nextJob->m_localmem_sz : clemuGetCompiledKernelMemSz(nextJob->m_groups[active_grp].m_kernel);
 		  nextJob->m_groups[active_grp].m_localmem_sz = local_mem_sz;

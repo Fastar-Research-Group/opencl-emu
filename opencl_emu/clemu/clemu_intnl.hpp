@@ -84,8 +84,8 @@ INTERNAL EMU
 #define CLEMU_DEV_NAME_SZ        128
 #define DEFAULTE_PROPERTY_FOLDER  "properties"
 #define DEFAULT_DEVCLASS         "evergreen"
-#define DEFAULT_DEVNAME         "Juniper"
-//#define DEFAULT_DEVNAME          "Cedar"
+//#define DEFAULT_DEVNAME         "Juniper"
+#define DEFAULT_DEVNAME          "Cedar"
 //#define DEFAULT_DEVNAME          "Redwood"
 #define DEFAULT_PROPERTIES_NM    "device_sheet"
 #define DEFAULT_EMULATOR_PROPERTIES_NM    "emulator_device_sheet"

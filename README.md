@@ -24,6 +24,10 @@ None received yet
 
 ## opencl-emu : logs
 
+### Version 0.12 
+* Minor updates to source and project files. 
+* Now tested in VS2013 and VS2015. 
+
 ### Version 0.11 
 * Minor updates to source and project files. 
 * Now tested in VS2012. 

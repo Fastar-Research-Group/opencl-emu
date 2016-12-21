@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -52,7 +53,18 @@ Security’s website at http://www.bis.doc.gov/.
 
 //#define AMDGC4XEMU 1
 
-
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+//#include <iostream>
+#include <typeinfo.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <cmath>
+#include <malloc.h>
+#include <memory.h>
+#include <cassert>
+#else
 //#include <iostream>
 #include <typeinfo.h>
 #include <stdlib.h>
@@ -62,7 +74,7 @@ Security’s website at http://www.bis.doc.gov/.
 #include <malloc.h>
 #include <memory.h>
 #include <assert.h>
-
+#endif
 
 
 
@@ -72,13 +84,9 @@ Security’s website at http://www.bis.doc.gov/.
 #define VEC3(Vec, I0, I1, I2)     Vec((I0),(I1), (I2))
 #define VEC4(Vec, I0, I1, I2, I3) Vec((I0),(I1), (I2), (I3))
 
-
 // UINT
 
 typedef float cl_float;
-
-
-
 
 #include "MathFunctions.ccl"
 
@@ -2588,9 +2596,6 @@ typedef clemu_vector16<float> float16;
 typedef clemu_vector16<double> double16;
 
 
-
-
-
 inline uint as_uint( uchar4 a)
 {
 	return (uint)(a.s0 | (a.s1 << 8) | (a.s2 << 16) | (a.s3 << 24) );
@@ -3274,15 +3279,17 @@ int2 r;
 static int2 signbit (float2 x)
 {
 int2 r;
-     r.lo = -signbit (x.lo);
-     r.hi = -signbit (x.hi);
+#if (_MSC_VER >= 1700)
+	r.lo = (signbit(x.lo)?-1:0);
+	r.hi = (signbit(x.hi)?-1:0);
+#else
+	r.lo = -signbit(x.lo);
+	r.hi = -signbit(x.hi);
+#endif
      return(r);
 }
 
-
-
 //Returns the component-wise compare of x == y.
-
 static __LONG2 isequal (double2 x, double2 y)
 {
 __LONG2 r;
@@ -3407,8 +3414,13 @@ __LONG2 r;
 static __LONG2 signbit (double2 x)
 {
 __LONG2 r;
-     r.lo = -signbit (x.lo);
-     r.hi = -signbit (x.hi);
+#if (_MSC_VER >= 1700)
+	r.lo = (signbit(x.lo) ? -1 : 0);
+	r.hi = (signbit(x.hi) ? -1 : 0);
+#else
+	r.lo = -signbit(x.lo);
+	r.hi = -signbit(x.hi);
+#endif
      return(r);
 }
 
@@ -3655,10 +3667,7 @@ double2 ret;
 }
 
 
-
-
 // ATAN2
-
 static float2 copysign( float2 _a, float2 _b)
 {
 float2 ret;
@@ -3676,9 +3685,7 @@ double2 ret;
 }
 
 
-
 // COS
-
 static float2 cos( float2 _a)
 {
 float2 ret;
@@ -4265,6 +4272,7 @@ float2 ret;
        ret.hi = nan(_b.hi);
 	   return ret;
 }
+
 static double2 nan( __LONG2 _b)
 {
 double2 ret;
@@ -5008,8 +5016,6 @@ static sign(double2 src)
        ret.y = sign(src.y);
 	   return ret;
   }
-
-
 
 /*---------------------------------------------------------------------------------------------------------------------
 *
@@ -12177,10 +12183,6 @@ static sign(double16 src)
   }
 
 
-
-
-#if 1
-
 // ABS
 
 template <class _T>
@@ -12213,8 +12215,6 @@ template <class _T>
      return(tmp);
   }
 
-
-
 /*
 BITSELECT
 */
@@ -12224,9 +12224,6 @@ template <class _T>
   {
      return(_a.SIMDbitselect(_b, _c));
   }
-
-
-
 
 /*
 MIN
@@ -12269,14 +12266,11 @@ _TN ret;
    return(ret);
 }
 
-
-
 template <class _T, class _TN>
 void genvstore(_TN data, size_t off, _T *p, int n)
 {
    memcpy(p+off*n, &data, sizeof(_TN));
 }
-
 
 template <class _T>
 _T vload(size_t off, _T *p)
@@ -12340,8 +12334,6 @@ void vstore4(clemu_vector4<_T> data, size_t off, _T *p)
    genvstore<_T, clemu_vector4<_T>>(data, off, p, 4);
 }
 
-
-
 template <class _T>
 clemu_vector8<_T> vload8(size_t off, _T *p)
 {
@@ -12358,13 +12350,11 @@ clemu_vector8<_T> ret = genvload<_T, clemu_vector8<_T>>(off, p, 8);
    return(ret);
 }
 
-
 template <class _T>
 void vstore8(clemu_vector8<_T> data, size_t off, _T *p)
 {
    genvstore<_T, clemu_vector8<_T>>(data, off, p, 8);
 }
-
 
 template <class _T>
 clemu_vector16<_T> vload16(size_t off, _T *p)
@@ -12382,13 +12372,11 @@ clemu_vector16<_T> ret = genvload<_T, clemu_vector16<_T>>(off, p, 16);
    return(ret);
 }
 
-
 template <class _T>
 void vstore16(clemu_vector16<_T> data, size_t off, _T *p)
 {
    genvstore<_T, clemu_vector16<_T>>(data, off, p, 16);
 }
-
 
 // COPY/PREFETCH functions
 #if 0
@@ -12482,20 +12470,14 @@ void prefetch (const __global _T *p,
 }
 
 
-#endif
-
 /*---------------------------------------------------------------------------------------------------------
  intrinsics
 ---------------------------------------------------------------------------------------------------------*/
-
-
 
 // GENERIC VECTOR 
 #define VECA2(_Vec, _Arr) VEC2(_Vec, _Arr[0], _Arr[1])
 #define VECA3(_Vec, _Arr) VEC3(_Vec, _Arr[0], _Arr[1], _Arr[2])
 #define VECA4(_Vec, _Arr) VEC4(_Vec, _Arr[0], _Arr[1], _Arr[2], _Arr[3])
-
-
 
 
 #endif // CALSIMC_HLSL

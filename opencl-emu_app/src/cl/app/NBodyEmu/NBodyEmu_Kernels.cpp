@@ -99,12 +99,7 @@ jurisdiction and venue of these courts.
  * Work-items use local memory to reduce memory bandwidth and reuse of data
  */
 
-//#define KA
-#ifdef KA
-#include "C:\Users\alyashev\alyashev_advtechmoreenvy\main\sw\advtech\tools\opencl_emu\clemu\clemu_opencl.h"
-#else
 #include "clemu_opencl.h"
-#endif
 
 /*
 __kernel
@@ -200,8 +195,6 @@ __Kernel(nbody_sim)
             acc += ((float4)s * r);
 
         }
-
-
 
         // Synchronize so that next tile can be loaded
 

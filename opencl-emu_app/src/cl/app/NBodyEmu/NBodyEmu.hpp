@@ -92,11 +92,19 @@ jurisdiction and venue of these courts.
 
 #ifndef NBODY_H_
 #define NBODY_H_
+
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-
+#endif
 
 //EXTERNAL
 #include "runCL.h"

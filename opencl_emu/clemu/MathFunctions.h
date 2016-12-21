@@ -432,8 +432,6 @@ void PUT_BITS_SP32(uint ux, float *x)
      *x = _bitsy.f;
 }
 
- #if 1
-
 
 static
 void GET_BITS_DP64(double x, ulong *ux)
@@ -463,8 +461,6 @@ ulong macro_t;
   *ix = (uint)(macro_t >> 32);
 }
 
-
-//
 
 
 static void
@@ -603,8 +599,6 @@ dekker_mul12d(double x, double y, double *z, double *zz)
 }
 
 
-#endif
-
 static void
 _SET_FLOAT_WORD(float *x, int i0)
 {
@@ -648,11 +642,6 @@ scaleFloat_2(float x, int n)
 }
 
 
-
-
-
-
-
 /* Computes the exact product of x and y, the result being the
    nearly double length number (z,zz) */ 
 static void 
@@ -685,7 +674,6 @@ mul2f(float x, float xx, float y, float yy, float *z, float *zz)
   *z = c + cc;
   *zz = (c - *z) + cc;
 }
-
 
 static
 void add2f( float a, float b, float *r, float *s )
@@ -729,8 +717,6 @@ scaleDownDouble(ulong ux, int k, ulong *ur)
     }
   *ur = uy | xsign;
 }
-
-
 
 
 static int
@@ -860,8 +846,6 @@ float r = as_float(i_r);
      return(r);
 }
 
-
-
 static float scaleFullRangef32(float y, float t)
 {
 float r = 0;
@@ -873,7 +857,7 @@ int exp_iy;
 int manty;
 int signy;
 int miy;    
-    k = (clFabs(t ) > 1024)? 1024 : (int)clFabs(t)  ;
+    k = (clFabs(t ) > 1024)? 1024 : (int)clFabs(t);
 	k = ( t < 0 ) ? -k : k;
 	t = (float)k;
     iiy = as_int(y);
@@ -883,7 +867,7 @@ int miy;
     exp_iy0 = (iy&EXPBITS_SP32);
     manty = (iy & MANTBITS_SP32);
 //sub-normal
-float ty = (exp_iy0 == 0)? (float)manty : as_float(iy);
+float ty = (exp_iy0 == 0) ? (float)manty : as_float(iy);
     k = (exp_iy0 == 0)? k - 149 : k;
 	ay = ty;
     iy = as_int(ay);
@@ -891,7 +875,7 @@ float ty = (exp_iy0 == 0)? (float)manty : as_float(iy);
     exp_iy = ((exp_iy0 >> EXPSHIFTBITS_SP32) - EXPBIAS_SP32);
 	// add k to y's exponent
     r = as_float(iy + (k << EXPSHIFTBITS_SP32));
-	r = ((exp_iy + k) > 127)? as_float(PINFBITPATT_SP32) : r;
+	r = ((exp_iy + k) > 127) ? as_float(PINFBITPATT_SP32) : r;
 // add k to y's exponent
 int delta = -126 - (exp_iy + k);
 int shift;

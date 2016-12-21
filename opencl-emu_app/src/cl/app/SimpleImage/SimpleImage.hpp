@@ -92,10 +92,20 @@ jurisdiction and venue of these courts.
 #ifndef SIMPLE_IMAGE_H_
 #define SIMPLE_IMAGE_H_
 
+
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#endif
+
 #ifndef CL_USE_DEPRECATED_OPENCL_1_1_APIS
 #define CL_USE_DEPRECATED_OPENCL_1_1_APIS
 #endif

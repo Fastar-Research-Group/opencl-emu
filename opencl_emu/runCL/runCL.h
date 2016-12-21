@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------
 Modified BSD License (2011):
 
-Copyright (c) 2011, Advanced Micro Devices, Inc.
+Original work Copyright (c) 2011 Advanced Micro Devices, Inc.
+Modified work Copyright (c) 2016 Pieter V. Reyneke
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following are met:
@@ -47,19 +48,26 @@ Security’s website at http://www.bis.doc.gov/.
 #if defined(__APPLE__) || defined(__MACOSX)
 #include <OpenCL/cl.h>
 #else
-
 #ifndef CL_USE_DEPRECATED_OPENCL_1_1_APIS
 #define CL_USE_DEPRECATED_OPENCL_1_1_APIS
 #endif
 #include <CL/opencl.h>
-
-
 #endif
 
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#endif
+
+
 
 //EXTERNAL
 

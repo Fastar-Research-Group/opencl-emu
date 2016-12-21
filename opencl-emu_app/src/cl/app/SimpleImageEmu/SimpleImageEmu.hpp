@@ -92,10 +92,18 @@ jurisdiction and venue of these courts.
 #ifndef SIMPLE_IMAGE_H_
 #define SIMPLE_IMAGE_H_
 
+//#if (__STDC_VERSION__ >= 201112L)
+#if (_MSC_VER >= 1700)
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#endif
 
 //EXTERNAL
 #include "runCL.h"
@@ -104,9 +112,6 @@ jurisdiction and venue of these courts.
 #include <SDKUtil/SDKApplication.hpp>
 #include <SDKUtil/SDKFile.hpp>
 #include <SDKUtil/SDKBitMap.hpp>
-
-
-
 
 
 #define INPUT_IMAGE "SimpleImageEmu_Input.bmp"

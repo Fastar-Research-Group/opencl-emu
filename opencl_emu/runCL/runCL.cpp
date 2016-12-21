@@ -44,9 +44,9 @@ Security’s website at http://www.bis.doc.gov/.
 
 #include "runCLintnl.hpp"
 #include "clemu.hpp"
-#include<GL/glut.h>
+#include <GL/glut.h>
 #include <cmath>
-#include<malloc.h>
+#include <malloc.h>
 
 
 typedef struct _runClDevProperty

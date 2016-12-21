@@ -91,9 +91,9 @@ jurisdiction and venue of these courts.
 
 
 #include "NBodyEmu.hpp"
-#include<GL/glut.h>
+#include <GL/glut.h>
 #include <cmath>
-#include<malloc.h>
+#include <malloc.h>
 
 
 #define DEFAULT_KERNEL_LOCATION "./"
